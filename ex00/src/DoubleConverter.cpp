@@ -1,25 +1,35 @@
 
 #include "DoubleConverter.hpp"
+#include <limits>
+#include <cmath>
+#include <cstdlib>
+#include <iomanip>
 
 DoubleConverter::DoubleConverter(void) {
-}
-
-DoubleConverter::DoubleConverter(const DoubleConverter& other) {
-	//TODO: implement deep-copy
 }
 
 DoubleConverter::~DoubleConverter(void) {
 }
 
-DoubleConverter& DoubleConverter::operator=(const DoubleConverter& other) {
-	if (this != &other) {
-		//TODO: implement using deep-copy
-	}
-
-	return *this;
+void DoubleConverter::print(std::ostream& out, const double& value) const {
+	out << "double: "
+		<< std::fixed << std::setprecision(1) 
+		<< value 
+		<< std::endl;
 }
 
-std::ostream& operator<<(std::ostream& out, const DoubleConverter& obj) {
-	out << "TODO: implement";
-	return out;
+void DoubleConverter::convertType(const std::string& value) {
+	char*	endptr = NULL;
+	double	res = 0;
+
+	if (value.length() == 1 && !std::isdigit(value[0])) {
+		print(std::cout, static_cast<double>(value[0]));
+		return ;
+	}
+
+	res = std::strtod(value.c_str(), &endptr);
+	if (*endptr != '\0' && std::string(endptr) != "f")
+		throw std::runtime_error("double: impossible");
+
+	print(std::cout, static_cast<double>(res));
 }

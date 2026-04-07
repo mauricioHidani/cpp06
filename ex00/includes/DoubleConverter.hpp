@@ -2,20 +2,16 @@
 #pragma once
 
 #include <iostream>
+#include <stdexcept>
+#include "IConverter.hpp"
 
-class DoubleConverter {
-private: 
-	//TODO: implement
-
-protected: 
-	//TODO: implement
+class DoubleConverter: public IConverter {
+private:
+	void print(std::ostream& out, const double& value) const;
 
 public: 
 	DoubleConverter(void);
-	DoubleConverter(const DoubleConverter& other);
 	~DoubleConverter(void);
 
-	DoubleConverter& operator=(const DoubleConverter& other);
+	void convertType(const std::string& value);
 };
-
-std::ostream& operator<<(std::ostream& out, const DoubleConverter& obj);
