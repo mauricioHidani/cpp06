@@ -24,7 +24,7 @@ void ScalarConverter::convert(const std::string& value) {
 		try {
 			type[i]->convertType(value);
 		} catch (const std::exception& e) {
-			std::cerr << e.what() << std::endl;
+			std::cout << e.what() << std::endl;
 		}
 		delete type[i];
 	}
