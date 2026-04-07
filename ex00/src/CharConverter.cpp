@@ -1,60 +1,39 @@
 
 #include "CharConverter.hpp"
+#include <cstdlib>
 
-CharConverter::CharConverter(void)
-	:	_value(0) {
-}
-
-CharConverter::CharConverter(const char& value)
-	:	_value(value) {
-}
-
-CharConverter::CharConverter(const CharConverter& other)
-	:	_value(other.getValue()) {
+CharConverter::CharConverter(void) {
 }
 
 CharConverter::~CharConverter(void) {
 }
 
-char CharConverter::getValue(void) const {
-	return _value;
-}
+void CharConverter::convertType(const std::string& value) {
+	std::string	impossibles[] = {
+		"nan", "nanf", 
+		"inf", "+inf", "-inf", 
+		"inff", "+inff", "-inff"
+	};
 
-CharConverter& CharConverter::operator=(const CharConverter& other) {
-	if (this != &other) {
-		_value = other.getValue();
+	char* 	endptr = NULL;
+	double	res = 0;
+	
+	if (value.length() == 1 && !std::isdigit(value[0])) {
+		std::cout << "char: " <<  value[0] << std::endl;
+		return ;
 	}
 
-	return *this;
-}
-
-void CharConverter::convertType(const std::string& value) {
-	char* 			endptr = NULL;
-	double			res = 0;
-	
-	std::string	impossibles[] = {"nan", "nanf", "+inf", "-inf", "+inff", "-inff"};
-	for (size_t i = 0; i < 6; i++)
+	for (size_t i = 0; i < impossibles->length(); i++)
 		if (value.compare(impossibles[i]) == 0)
-			throw ImpossibleException();
+			throw std::runtime_error("char: impossible");
 	
 	res = std::strtod(value.c_str(), &endptr);
+	if (*endptr != '\0')
+		throw std::runtime_error("char: impossible");
 	if (res < 0 || res > 127)
-		throw ImpossibleException();
+		throw std::runtime_error("char: impossible");
 	if (res < 32 || res > 126)
-		throw NonDisplayableException();
-	
-	_value = static_cast<char>(res);
-}
+		throw std::runtime_error("char: non displayable");
 
-const char* CharConverter::ImpossibleException::what() const throw() {
-	return "char: impossible";
-}
-
-const char* CharConverter::NonDisplayableException::what() const throw() {
-	return "char: non displayable";
-}
-
-std::ostream& operator<<(std::ostream& out, const CharConverter& obj) {
-	out << "char: " << obj.getValue();
-	return out;
+	std::cout << "char: " << static_cast<char>(res) << std::endl;
 }
