@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/04/01 15:58:03 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/07 11:50:24 by mhidani          ###   ########.fr        #
+#    Created: 2026/04/07 14:40:02 by mhidani           #+#    #+#              #
+#    Updated: 2026/04/07 16:11:08 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,18 @@ INC_DIR		= includes
 SRC_DIR		= src
 OBJ_DIR		= obj
 
-FILES		= 
+SRC_FLS		= ScalarConverter.cpp CharConverter.cpp IntConverter.cpp \
+			  FloatConverter.cpp DoubleConverter.cpp
 MAIN		= main.cpp
 
-SRCS		= $(addprefix $(SRC_DIR)/, $(FILES))
+SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FLS))
 
-SRC_OBJS	= $(addprefix $(OBJ_DIR)/, $(FILES:.cpp=.o))
+SRC_OBJS	= $(addprefix $(OBJ_DIR)/, $(SRC_FLS:.cpp=.o))
 MAIN_OBJ	= $(OBJ_DIR)/$(MAIN:.cpp=.o)
 OBJS		= $(SRC_OBJS) $(MAIN_OBJ)
 
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
 CXXINCS		= -I$(INC_DIR)/
 
 VALGRIND	= valgrind
@@ -44,6 +45,7 @@ MKD			= mkdir
 MKDFLAGS	= --parents
 RM			= rm
 RMFLAGS		= --force --recursive
+ARGS		= 
 
 define check_created
 	if [ -f $(1) ]; then \
@@ -93,7 +95,7 @@ banner:
 	@echo 
 
 run: banner $(NAME)
-	@$(VALGRIND) $(VGDFLAGS) ./$(NAME)
+	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) $(ARGS)
 	@$(call check_created, $(VGDLOG))
 
 $(NAME): $(OBJS)

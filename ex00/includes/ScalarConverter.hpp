@@ -7,8 +7,5 @@ private:
 
 public: 
 	virtual ~ScalarConverter(void);
-
-	ScalarConverter& operator=(const ScalarConverter& other);
-
 	static void convert(const std::string& value);
 };
