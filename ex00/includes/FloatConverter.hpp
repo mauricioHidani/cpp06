@@ -2,20 +2,16 @@
 #pragma once
 
 #include <iostream>
+#include <stdexcept>
+#include "IConverter.hpp"
 
-class FloatConverter {
-private: 
-	//TODO: implement
-
-protected: 
-	//TODO: implement
+class FloatConverter: public IConverter {
+private:
+	void print(std::ostream& out, const float& value);
 
 public: 
 	FloatConverter(void);
-	FloatConverter(const FloatConverter& other);
 	~FloatConverter(void);
 
-	FloatConverter& operator=(const FloatConverter& other);
+	void convertType(const std::string& value);
 };
-
-std::ostream& operator<<(std::ostream& out, const FloatConverter& obj);
