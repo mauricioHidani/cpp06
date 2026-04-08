@@ -1,0 +1,8 @@
+# Directory
+.brainStorage/
+.vscode/
+
+# Files
+*.out
+*.log
+serializer
