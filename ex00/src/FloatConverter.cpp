@@ -12,9 +12,12 @@ FloatConverter::~FloatConverter(void) {
 }
 
 void FloatConverter::print(std::ostream& out, const float& value) {
-	out << "float: " 
-		<< std::fixed << std::setprecision(1) 
-		<< value << "f" 
+	out << "float: ";
+
+	if (value > std::numeric_limits<float>::max())
+		out << "+";
+	out << std::fixed << std::setprecision(1)
+		<< value << "f"
 		<< std::endl;
 }
 

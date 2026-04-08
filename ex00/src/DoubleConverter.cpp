@@ -12,8 +12,11 @@ DoubleConverter::~DoubleConverter(void) {
 }
 
 void DoubleConverter::print(std::ostream& out, const double& value) const {
-	out << "double: "
-		<< std::fixed << std::setprecision(1) 
+	out << "double: ";
+
+	if (value > std::numeric_limits<double>::max())
+		out << "+";
+	out << std::fixed << std::setprecision(1) 
 		<< value 
 		<< std::endl;
 }
