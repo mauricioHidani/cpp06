@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/07 14:40:02 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/07 22:15:52 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/08 01:27:40 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INC_DIR		= includes
 SRC_DIR		= src
 OBJ_DIR		= obj
 
-SRC_FLS		= Serializer.cpp
+SRC_FLS		= Base.cpp Utils.cpp
 MAIN		= main.cpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FLS))
