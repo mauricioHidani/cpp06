@@ -13,12 +13,12 @@ Base* generate(void) {
 	}
 }
 
-void identity(Base* p) {
+void identity(Base* ptr) {
 	std::string (*isType[])(Base*) = { isTypeA, isTypeB, isTypeC };
 	std::string type;
 
 	for (size_t i = 0; i < 3; i++) {
-		type = isType[i](p);
+		type = isType[i](ptr);
 		if (!type.empty()) {
 			std::cout << "identified: " << type << std::endl;
 			break ;
@@ -26,12 +26,12 @@ void identity(Base* p) {
 	}
 }
 
-void identity(Base& p) {
-	std::string (*isType[])(Base*) = { isTypeA, isTypeB, isTypeC };
+void identity(Base& ptr) {
+	std::string (*isType[])(Base&) = { isTypeA, isTypeB, isTypeC };
 	std::string type;
 
 	for (size_t i = 0; i < 3; i++) {
-		type = isType[i](&p);
+		type = isType[i](ptr);
 		if (!type.empty()) {
 			std::cout << "identified: " << type << std::endl;
 			break ;
@@ -39,20 +39,47 @@ void identity(Base& p) {
 	}
 }
 
-std::string isTypeA(Base* p) {
-	if (dynamic_cast<A*>(p) != NULL)
+std::string isTypeA(Base* ptr) {
+	if (dynamic_cast<A*>(ptr) != NULL)
 		return "A";
 	return std::string("");
 }
 
-std::string isTypeB(Base* p) {
-	if (dynamic_cast<B*>(p) != NULL)
+std::string isTypeB(Base* ptr) {
+	if (dynamic_cast<B*>(ptr) != NULL)
 		return "B";
 	return std::string("");
 }
 
-std::string isTypeC(Base* p) {
-	if (dynamic_cast<C*>(p) != NULL)
+std::string isTypeC(Base* ptr) {
+	if (dynamic_cast<C*>(ptr) != NULL)
 		return "C";
 	return std::string("");
+}
+
+std::string isTypeA(Base& ref) {
+	try {
+		dynamic_cast<A&>(ref);
+		return "A";
+	} catch (const std::bad_cast& e) {
+		return std::string("");
+	}
+}
+
+std::string isTypeB(Base& ref) {
+	try {
+		dynamic_cast<B&>(ref);
+		return "B";
+	} catch (const std::bad_cast& e) {
+		return std::string("");
+	}
+}
+
+std::string isTypeC(Base& ref) {
+	try {
+		dynamic_cast<C&>(ref);
+		return "C";
+	} catch (const std::bad_cast& e) {
+		return std::string("");
+	}
 }
